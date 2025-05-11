@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "bedrock-protocol": "^3.45.0",
+    "dotenv": "^16.5.0",
+    "grammy": "^1.36.1",
+    "mongoose": "^8.14.1",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.12"
+  },
+  "name": "thatpingerbot",
+  "version": "1.0.0",
+  "description": "Telegram bot for checking server status in Minecraft(Bedrock/Java)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --experimental-strip-types src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shonestew/ThatPingerBot.git"
+  },
+  "author": "shonestew",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shonestew/ThatPingerBot/issues"
+  },
+  "homepage": "https://github.com/shonestew/ThatPingerBot#readme"
+}
