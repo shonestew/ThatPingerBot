@@ -1,6 +1,6 @@
-import { Bot } from "grammy";
+import { Bot, Context } from "grammy";
 
-export class StartCommandHandler {
+export default class StartCommandHandler {
   private bot: Bot;
 
   constructor(bot: Bot) {
@@ -8,8 +8,9 @@ export class StartCommandHandler {
   }
 
   public handler() {
-    this.bot.command("start", async (ctx) => {
-      await ctx.reply("Привет! Это бот для пинга сервера")
+    this.bot.command("start", async (ctx: Context) => {
+      await ctx.reply("Привет! Это бот для пинга сервера. Команды:" +
+        "\n/ping_server [ip] [port] - пингует сервер и извлекает оттуда список игроков")
     })
   }
 }

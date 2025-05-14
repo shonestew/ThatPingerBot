@@ -1,5 +1,6 @@
 import { Bot } from "grammy";
 
+// Допишу как-нибудь потом
 export class AddServerHandler {
   private bot: Bot;
 
@@ -8,6 +9,8 @@ export class AddServerHandler {
   }
 
   public handler() {
-    // this.bot.command("add_server", async (ctx))
+    this.bot.on("message").command("add_server", async (ctx) => {
+      // ...
+    })
   }
 }

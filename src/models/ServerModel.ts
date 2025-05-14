@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import ServerInfo from "../types/ServerTypes";
+import { ServerInfo } from "../types/ServerTypes.ts";
 
 const serverSchema = new mongoose.Schema<ServerInfo>({
   chatId: { type: mongoose.Schema.Types.Mixed, required: true },
@@ -7,12 +7,12 @@ const serverSchema = new mongoose.Schema<ServerInfo>({
   port: { type: mongoose.Schema.Types.Mixed, required: true }
 })
 
-const serverModel = mongoose.model('ServerInfo', serverSchema, "servers_info");
+const serverModel = mongoose.model("servers_info", serverSchema, "servers_info");
 
 export class ServerModel {
   private model: mongoose.Model<ServerInfo>
 
-  constructor(serverSchema: mongoose.Model<ServerInfo>) {
+  constructor() {
     this.model = serverModel
   }
 

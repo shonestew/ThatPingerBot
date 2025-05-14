@@ -1,20 +1,13 @@
 {
-  "dependencies": {
-    "bedrock-protocol": "^3.45.0",
-    "dotenv": "^16.5.0",
-    "grammy": "^1.36.1",
-    "mongoose": "^8.14.1",
-    "typescript": "^5.8.3"
-  },
-  "devDependencies": {
-    "@types/node": "^22.15.12"
-  },
   "name": "thatpingerbot",
   "version": "1.0.0",
-  "description": "Telegram bot for checking server status in Minecraft(Bedrock/Java)",
-  "main": "index.js",
+  "type": "commonjs",
+  "description": "Telegram bot for checking server status in Minecraft (Bedrock/Java)",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node --experimental-strip-types src/index.ts"
+    "start": "npx tsx src/index.ts",
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -25,5 +18,19 @@
   "bugs": {
     "url": "https://github.com/shonestew/ThatPingerBot/issues"
   },
-  "homepage": "https://github.com/shonestew/ThatPingerBot#readme"
+  "homepage": "https://github.com/shonestew/ThatPingerBot#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "bedrock-protocol": "^3.45.0",
+    "dotenv": "^16.5.0",
+    "grammy": "^1.36.1",
+    "mongoose": "^8.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.12",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
 }
