@@ -10,11 +10,9 @@ export default class PingServerHandler {
 
   public handler() {
     this.bot.on("message").command("ping_server", async (ctx) => {
-      const match = ctx.message!.text.split(" ")
+      const match = ctx.message.text.split(" ")
       const hostname = match[1]
-      const port = Number(match[2])
-
-      if (hostname.endsWith("block-battle.lol")) return
+      const port = Number(match[2]) || 19132
 
       if (!hostname || !port || Number.isNaN(port)) {
         ctx.reply("Нету нужных параметров или один из параметров неверно введён!")
@@ -26,21 +24,38 @@ export default class PingServerHandler {
       })
 
       const ping_res = await ServerManager.getSrvStatByBot({ hostname, port })
-      const players_list = ping_res.players.length > 0
-        ? ping_res.players.join(", ")
-        : "Нету"
 
-      if (ping_res.online) {
-        await ctx.reply("Статус сервера - включён." +
-          `\nКоличество игроков - ${ping_res.players.length},` +
-          `\nСписок игроков: ${players_list}`, {
+      if (ping_res?.data.online && !ping_res?.error) {
+        const players_list = ping_res?.data.players.length > 0
+          ? ping_res?.data.players.join(", ")
+          : "Нету"
+
+        ctx.reply("Статус сервера - включён." +
+          `\nКоличество игроков - ${ping_res?.data.players.length}/${ping_res?.data.other_data?.players.max},` +
+          `\nСписок игроков: ${players_list}` +
+          `\nДебаг-информация: <blockquote expandable>${JSON.stringify(ping_res, null, 2)}</blockquote>`, {
           reply_to_message_id: ctx.message.message_id,
+          parse_mode: "HTML"
         })
         await ctx.api.deleteMessage(ctx.message.chat.id, ready_mess.message_id)
-      } else {
-        await ctx.reply("Статус сервера - отключён.", {
+        return;
+      } else if (ping_res?.error === "not_authenticated") {
+        ctx.reply("Статус сервера - включён." +
+          `\nКоличество игроков - ${ping_res?.data.other_data?.players.online}/${ping_res?.data.other_data?.players.max}` +
+          "\nСписок игроков - не получен" +
+          `\nДебаг-информация: <blockquote expandable>${JSON.stringify(ping_res, null, 2)}</blockquote>`, {
           reply_to_message_id: ctx.message.message_id,
+          parse_mode: "HTML"
         })
+        await ctx.api.deleteMessage(ctx.message.chat.id, ready_mess.message_id)
+        return;
+      } else {
+        ctx.reply(`Статус сервера - отключён.\nДебаг-информация: <blockquote expandable>${JSON.stringify(ping_res, null, 2)}</blockquote>`, {
+          reply_to_message_id: ctx.message.message_id,
+          parse_mode: "HTML"
+        })
+        await ctx.api.deleteMessage(ctx.message.chat.id, ready_mess.message_id)
+        return;
       }
     })
   }

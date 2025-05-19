@@ -1,10 +1,10 @@
-export type ServerInfo = {
+export interface ServerInfo {
   chatId?: string | number;
   hostname: string;
   port: number
 }
 
-export type ServerResponse = {
+export interface ServerResponse {
   online: boolean;
   ip: string;
   port: number;
@@ -49,9 +49,12 @@ export type ServerResponse = {
   };
 }
 
-export type PingResult = {
-  online: boolean;
-  has_players: boolean;
-  players: string[];
-  other_data: ServerResponse | null
+export interface PingResult {
+  error: boolean | string;
+  data: {
+    online: boolean;
+    has_players: boolean;
+    players: string[];
+    other_data: ServerResponse | null
+  }
 }
